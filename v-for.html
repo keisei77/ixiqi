@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+    <div id="demo">
+<!--         <div v-for="c in category" v-show="c.type==='weekday'">
+            {{c.type}}
+            <div v-for="item in c.subType">{{ item.price }}</div>
+            <input v-for="item in c.subType" v-model="item.price" />
+        </div> -->
+        <div v-for="item in newTest">
+            <div>{{ item.type }}</div>
+            <!-- <div>{{ item.type }}</div> -->
+            <!-- <div>{{ item.price }}</div> -->
+            <div>{{ item.price }}</div>
+        </div> 
+<!--         <div v-for="item in category | get_items">
+            <div v-for="price in array">{{ price.price }}</div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div> -->
+        <!-- {{category | json}} -->
+    </div>
+    <script src="http://cdn.bootcss.com/vue/1.0.17/vue.min.js"></script>
+    <script>
+        'use strict';
+
+        new Vue({
+            el: '#demo',
+            data: {
+                category: 
+                [
+                    {
+                        type: 'weekday',
+                        subType: [
+                            {
+                                type: 'standrad',
+                                price: '811'
+                            },
+                            {
+                                type: 'select',
+                                price: '550'
+                            }
+                        ]
+                    },
+                    {
+                        type: 'sunday',
+                        subType: [
+                             {
+                                type: 'standrad',
+                                price: '660'
+                             },
+                             {
+                                type: 'select',
+                                price: '450'
+                             }
+                        ]
+                    },
+                    {
+                        type: 'anyday',
+                        subType: [
+                             {
+                                type: 'standrad',
+                                price: '1111'
+                             },
+                             {
+                                type: 'select',
+                                price: '850'
+                             }
+                        ]
+                    }
+                ],
+                array: [],
+                test: {
+                        type: 'anyday',
+                        subType: [
+                             {
+                                type: 'standrad',
+                                price: '1111'
+                             },
+                             {
+                                type: 'select',
+                                price: '850'
+                             }
+                        ]
+                    },
+                    newTest: [
+                             {
+                                type: 'standrad',
+                                price: '1111'
+                             },
+                             {
+                                type: 'select',
+                                price: '850'
+                             }
+                        ]
+            },
+            computed: {
+                items() {
+                    return this.$eval('category | get_items')
+                    //var arr = []
+                    //this.category.forEach(c => c.subType.forEach(t => arr.push(t)))
+                    //return arr
+                }
+            },
+            filters: {
+                get_items: function (category) {
+                    console.log(category)
+                    let categoryData = category.filter(function(item) {
+                        return item.type === 'weekday'
+                    })
+                    var arr = []
+                    categoryData.forEach(c => c.subType.forEach(t => arr.push(t)))
+                    arr.push(arr[1])
+                    arr.push(arr[1])
+                    console.log(arr)
+                    this.array = arr
+                    return arr
+                }
+            },
+            created () {
+                this.category.forEach(function(item) {
+                    item.subType.push(item.subType[1])
+                    item.subType.push(item.subType[1])
+                })
+                console.log(this.category)
+            }
+        })
+    </script>
+</body>
+</html>
